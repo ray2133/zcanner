@@ -4,12 +4,13 @@ import { ScannerComponent } from './scanner.component';
 
 describe('ScannerComponent', () => {
   let component: ScannerComponent;
-  let fixture: ComponentFixture<ScannerComponent>;
+  let fixture: ComponentFixture<ScannerComponent>;4
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [ScannerComponent]
-    });
+    })
+    .compileComponents();
     fixture = TestBed.createComponent(ScannerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

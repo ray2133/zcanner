@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { VIDEO_CONFIG } from './scanner.const';
-import jsQR from 'jsqr';
-import { Subject, takeUntil, timer } from 'rxjs';
+import { VIDEO_CONFIG } from "./scanner.const";
+import jsQR from "jsqr";
+import { Subject, takeUntil, timer } from "rxjs";
 @Component({
   selector: 'app-scanner',
   templateUrl: './scanner.component.html',
@@ -24,14 +24,14 @@ ngAfterViewInit(): void {
 }
 
 async prepareScanner() {
-  const avalible = await this.checkCamera()
-  if (avalible) this.startScanner()
+  const available = await this.checkCamera()
+  if (available) this.startScanner()
 }
 
 changeCamera(){
-  let {facingMode} =this.config.video
+  let {facingMode} = this.config.video
 
-  this.config.video.facingMode = facingMode === 'enviroment' ? 'user': 'enviroment'
+  this.config.video.facingMode = facingMode === 'enviroment' ? 'user' : 'enviroment'
   this.startScanner()
 }
 async startScanner(){
@@ -50,7 +50,7 @@ spyCamera(){
 
     const canvas = this.canvas.nativeElement.getContext('2d') as CanvasRenderingContext2D
 
-    canvas.drawImage(this.canvas.nativeElement, 0, 0, clientWidth,clientHeight)
+    canvas.drawImage(this.video.nativeElement, 0, 0, clientWidth,clientHeight)
 
     const inversionAttempts = 'dontInvert'
 
@@ -63,7 +63,7 @@ spyCamera(){
       this.result = data
 
     }else{
-      timer(500).pipe(takeUntil(this.destroy$)).subscribe( () =>{
+      timer(100).pipe(takeUntil(this.destroy$)).subscribe( () =>{
         this.spyCamera()
       })
     }
@@ -71,15 +71,17 @@ spyCamera(){
 }
 
 async checkCamera(){
-   const cameraPermissions = await navigator.permissions.query({name:'camera' as any })
+   const cameraPermissions = await navigator.permissions.query({name:'camera'} as any )
    console.log(cameraPermissions)
 
    const isOk = cameraPermissions.state !== "denied"
 
-   const hasMediaDevice = 'mediaDevice' in navigator
+   const hasMediaDevice = 'mediaDevices' in navigator
    const hasUserMedia = 'getUserMedia' in navigator.mediaDevices
 
-   if(!hasMediaDevice || (!hasUserMedia &&isOk)) {}
+   if(!hasMediaDevice || (!hasUserMedia && isOk)) {
+    alert("no conseguimos acceder a lacamara sorry")
+   }
 
    return cameraPermissions.state != "denied"
 }

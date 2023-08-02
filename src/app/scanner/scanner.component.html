@@ -2,9 +2,11 @@
 <section class="wrapper__scanner">
     <button class="float-button" (click)="changeCamera()">R</button>
     <div class="video--container">
-        <video #videoElement autoplay playsinLine></video>
+        <video #videoElement autoplay playsinline></video>
     </div> 
-    <p class="nt-2">{{"Centralize una camara con codigo qr"}}</p>
+    <p class="mt-2">{{"Centralize una camara con codigo qr"}}</p>
+    <h1>Resultado</h1>
+    <span>{{ result }}</span>
     <div class="video--container" style="display: none">
         <canvas id="canvas" #canvas></canvas>
     </div>
